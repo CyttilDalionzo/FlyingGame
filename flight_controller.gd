@@ -7,7 +7,7 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	set_linear_velocity(Vector3(0,0,60))
-	OS.set_window_fullscreen(true)
+	# OS.set_window_fullscreen(true)
 	pass
 
 func _process(delta):
@@ -39,9 +39,20 @@ func _process(delta):
 	if (Input.is_action_pressed("roll_right")):
 		apply_impulse(m.xform(Vector3(3, 0, 0)), m.xform(Vector3(0, 0.15, 0))*abs(local_velocity.z)*0.01)
 	
-	#get_node("CameraTurn/Camera/Label").set_text(str(local_velocity.z))
+	if(Input.is_action_pressed("shoot")):
+		# Gun on the left
+		createBullet(get_translation()+m.basis.x*1.5+m.basis.z,m.basis.z*300)
+		# Gun on the right
+		createBullet(get_translation()-m.basis.x*1.5+m.basis.z,m.basis.z*300)
 	pass
 
 func _input(event):
 	get_node("CameraTurn/Camera/Label").set_text(str(event))
 	pass
+
+func createBullet(pos,dir):
+	var newBullet = get_node("/root/Node/Bullet/").duplicate()
+	get_node("/root/Node").add_child(newBullet)
+	newBullet.set_translation(pos)
+	newBullet.set_linear_velocity(dir)
+	newBullet.set_rotation(get_rotation())
