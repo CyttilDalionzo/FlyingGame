@@ -7,12 +7,14 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	set_linear_velocity(Vector3(0,0,60))
-	# OS.set_window_fullscreen(true)
+	OS.set_window_fullscreen(true)
 	
 	# Instantiate airplane mesh
 	var airPlane = load("res://f16.scn").instance()
 	add_child(airPlane)
 	airPlane.set_scale(Vector3(3,3,3))
+	
+	var test = CollisionShape.new()
 	pass
 
 func _process(delta):
@@ -28,8 +30,11 @@ func _process(delta):
 	apply_impulse(Vector3(0, 0, 0), m.xform(Vector3(0, lift, 0)*-local_velocity.y*(abs(local_velocity.z)+1)))
 	apply_impulse(m.xform(Vector3(0, 0.05, -0.1)), m.xform(Vector3(0.01, 0, 0)*-local_velocity.x*(abs(local_velocity.z)+1)))
 	
+	get_node("F16/Smoke").set_emitting(false)
+	
 	if Input.is_action_pressed("full_throttle"):
 		apply_impulse(Vector3(0, 0, 0), m.xform(Vector3(0, 0, 1)))
+		get_node("F16/Smoke").set_emitting(true)
 	
 	
 	if (Input.is_action_pressed("pitch_up")):
@@ -61,3 +66,8 @@ func createBullet(pos,dir):
 	newBullet.set_translation(pos)
 	newBullet.set_linear_velocity(dir)
 	newBullet.set_rotation(get_rotation())
+
+func hit(var speed):
+	
+	
+	pass
