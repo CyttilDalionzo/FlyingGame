@@ -7,7 +7,12 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	set_linear_velocity(Vector3(0,0,60))
-	OS.set_window_fullscreen(true)
+	# OS.set_window_fullscreen(true)
+	
+	# Instantiate airplane mesh
+	var airPlane = load("res://f16.scn").instance()
+	add_child(airPlane)
+	airPlane.set_scale(Vector3(3,3,3))
 	pass
 
 func _process(delta):
