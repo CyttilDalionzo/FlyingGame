@@ -7,7 +7,7 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	set_linear_velocity(Vector3(0,0,60))
-	# OS.set_window_fullscreen(true)
+	OS.set_window_fullscreen(true)
 	pass
 
 func _process(delta):
@@ -47,7 +47,7 @@ func _process(delta):
 	pass
 
 func _input(event):
-	get_node("CameraTurn/Camera/Label").set_text(str(event))
+	get_node("CameraTurn/CameraTurnVertical/Camera/Label").set_text(str(event))
 	pass
 
 func createBullet(pos,dir):
