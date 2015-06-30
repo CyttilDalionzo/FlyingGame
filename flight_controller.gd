@@ -21,6 +21,8 @@ func _process(delta):
 	var lift = 0.02
 	var drag = 0.01
 	
+	get_node("CameraTurn/CameraTurnVertical/Camera/Label").set_text(str(OS.get_frames_per_second()))
+	
 	# Get the transform, and center it
 	var m = get_transform()
 	m[3] = Vector3()
@@ -35,6 +37,7 @@ func _process(delta):
 	if Input.is_action_pressed("full_throttle"):
 		apply_impulse(Vector3(0, 0, 0), m.xform(Vector3(0, 0, 1)))
 		get_node("F16/Smoke").set_emitting(true)
+		get_node("F16/Smoke").set_emission_base_velocity(m.xform(Vector3(0, 0, -30)))
 	
 	
 	if (Input.is_action_pressed("pitch_up")):
