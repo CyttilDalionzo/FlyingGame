@@ -6,7 +6,7 @@ func _ready():
 	set_mass(5)
 	set_process(true)
 	set_process_input(true)
-	set_linear_velocity(Vector3(0,0,60))
+	set_linear_velocity(Vector3(0,0,200))
 	OS.set_window_fullscreen(true)
 	
 	# Instantiate airplane mesh
@@ -33,11 +33,23 @@ func _process(delta):
 	apply_impulse(m.xform(Vector3(0, 0.05, -0.1)), m.xform(Vector3(0.01, 0, 0)*-local_velocity.x*(abs(local_velocity.z)+1)))
 	
 	get_node("F16/Smoke").set_emitting(false)
+	get_node("F16/Fire").set_emitting(false)
+	
+	var offset = 0.004*local_velocity.z
+	var t = Transform()
+	t[3] = Vector3(0, 0.2, -1.3-offset)
+	get_node("F16/Fire").set_emission_half_extents(Vector3(0.1, 0.1, 0.2+offset))
+	get_node("F16/Fire").set_transform(t)
+	
+	get_node("F16/FireLight").set_enabled(false)
 	
 	if Input.is_action_pressed("full_throttle"):
 		apply_impulse(Vector3(0, 0, 0), m.xform(Vector3(0, 0, 1)))
 		get_node("F16/Smoke").set_emitting(true)
 		get_node("F16/Smoke").set_emission_base_velocity(m.xform(Vector3(0, 0, -30)))
+		get_node("F16/Fire").set_emitting(true)
+		get_node("F16/Fire").set_emission_base_velocity(m.xform(Vector3(0, 0, -50)))
+		get_node("F16/FireLight").set_enabled(true)
 	
 	
 	if (Input.is_action_pressed("pitch_up")):

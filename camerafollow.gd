@@ -11,7 +11,7 @@ func _ready():
 func _input(event):
 	if event.is_action("scroll_up"):
 		set_scale(get_scale()*(1/zoom_factor))
-		
+	
 	if event.is_action("scroll_down"):
 		set_scale(get_scale()*zoom_factor)
 	
